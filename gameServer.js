@@ -2,7 +2,7 @@ const express = require("express");
 const colors = require("colors");
 const path = require("path");
 const bodyParser = require("body-parser");
-const controller = require("./controllers/serverController.js");
+const controller = require("./Controllers/serverController.js");
 
 // Set up express server
 const app = express();
@@ -20,6 +20,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 controller(app);
 
 // Listen for requests at port 3000
-app.listen(3000);
+app.listen(8080);
 
 console.log("Server running.".magenta.redBG);
