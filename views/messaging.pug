@@ -2,18 +2,30 @@ doctype html
 html(lang="en")
 	head
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		link(href="styles.css" rel="stylesheet" type="text/css")
+		link(href="styles/messaging-styles.css" rel="stylesheet" type="text/css")
 		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous")
 	body
 	.container-fluid
-		#messaging.col-md-4
-			#talkspace.col.md4
-				ol
-					li item 1
-					li item 2
-					li item 3
-			#textbox.col-md-4
+		.row
+			.col-md-16
+				h1(id="title") Messaging
+		.row
+			#messaging.col-md-16
+				#talkspace.col.md-4
+					#responses.row
+						ol
+							li item 1
+							li item 2
+							li item 3
+					#sent.row
+						ol
+							li item 1
+							li item 2
+							li item 3
+		.row
+			#textbox.col-md-2
 				input(type="text")
+			#buttons.col-md-2
 				button send
 	footer
 		script(src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous")

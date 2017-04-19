@@ -1,0 +1,25 @@
+* {
+    padding: 50;
+    margin: 50;
+}
+#title {
+	text-align: center;
+}
+#messaging {
+	width: 90%;
+}
+#responses {
+	float: left;
+}
+#sent {
+	float: right;
+}
+#textbox {
+	width: 400px;
+	height: 400px;
+}
+input {
+	float: right;
+	width: 350px;
+	height: 175px;
+}
