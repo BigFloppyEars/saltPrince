@@ -131,7 +131,7 @@ function(GameObject, Canvas, Clock, BoardManager){
 			// Player 1
 			if (Keys[4].pressed) {
 				$.ajax({
-					url: 'http://localhost:3000/laststand',
+					url: 'http://localhost:8080/laststand',
 					data: {"data": "TEST"},
 					type: 'POST',
 					success: function (data) {

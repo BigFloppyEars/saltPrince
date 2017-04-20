@@ -20,5 +20,10 @@ module.exports = function(app) {
 		res.send(JSON.stringify(req.body));
 		console.log(req.body.data);
 	});
+	
+	app.post("/messaging", function(req, res){
+		res.send(JSON.stringify(req.body));
+		console.log(req.body.data);
+	});
 
 };
