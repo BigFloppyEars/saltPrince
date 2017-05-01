@@ -18,21 +18,27 @@ requirejs.config({
 // Start "root" or "main" module/ script.	
 function(){
 	
-	$("#send").click(function() {
-		console.log($("input"));
-		$.ajax({
-			url: 'http://localhost:8080/messaging',
-			data: {"data": "TEST"},
-			type: 'POST',
-			success: function (data) {
-				let ret = jQuery.parseJSON(data);
-				$('li').html(ret.data.toString());
-				console.log('Success: ' + ret.data.toString());
-			},
-			error: function (xhr, status, error) {
-				console.log('Error: ' + error.message);
-				$('#response').html('Error connecting to the server.');
-			},
+		console.log($("#user").html());
+	if ($("#user").html() !== undefined) {
+		console.log($("#title").html());
+		$("#send").click(function() {
+			let temp = $("#message").val();
+			console.log($("#message").val());
+			$.ajax({
+				url: 'http://localhost:8080/messaging',
+				data: {"message": temp},
+				type: 'POST',
+				success: function (data) {
+					location.reload();
+					let ret = jQuery.parseJSON(data);
+					console.log('Success: ' + ret.message.toString());
+				},
+				error: function (xhr, status, error) {
+					console.log('Error: ' + error.message);
+					$('#response').html('Error connecting to the server.');
+				},
+			});
 		});
-	});
+	}
+	
 });

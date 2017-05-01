@@ -1,0 +1,12 @@
+extends profile.pug
+
+block append content
+	.container-fluid
+		.row
+			if user === undefined
+				button#login(type="submit") Guest Login
+			else
+				button#logout(type="submit") Logout
+			
+block prepend foot
+	script(data-main="js/login.js" src="js/require.js")
