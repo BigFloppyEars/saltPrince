@@ -2,9 +2,9 @@
   "name": "cnfloss93",
   "version": "1.0.0",
   "description": "a node app that host my games and hopefully a community of users",
-  "main": "gameServer.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "bigFloppyEars",
   "repository": {
@@ -19,6 +19,7 @@
     "express": "^4.15.2",
     "express-session": "^1.15.2",
     "mongoose": "^4.9.7",
+    "nconf": "^0.8.4",
     "passport": "^0.3.2",
     "pug": "^2.0.0-beta11"
   }
