@@ -4,6 +4,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const nconf = require("nconf");
 const serverController = require("./Controllers/serverController.js");
 const dbController = require("./Controllers/databaseController.js");
 
@@ -18,7 +19,7 @@ const app = express();
   app.use(session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
   app.use(passport.session());*/
-  
+
 // Set template engine
 app.set("view engine", "pug");
 
@@ -29,7 +30,18 @@ app.use(express.static("Assets"));
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Handle database logic
-dbController();
+nconf.argv().env().file('keys.json');
+const user = nconf.get('mongoUser');
+const pass = nconf.get('mongoPass');
+const host = nconf.get('mongoHost');
+const port = nconf.get('mongoPort');
+
+let uri = `mongodb://${user}:${pass}@${host}:${port}`;
+if (nconf.get('mongoDatabase')) {
+  uri = `${uri}/${nconf.get('mongoDatabase')}`;
+}
+
+dbController.start(uri);
 
 // Handle routing and request logic
 serverController(app);
@@ -38,5 +50,3 @@ serverController(app);
 app.listen(8080);
 
 console.log("Server running.".magenta.whiteBG);
-
-

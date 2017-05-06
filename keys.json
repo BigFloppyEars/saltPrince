@@ -1,7 +1,0 @@
-{
-  "mongoHost": "ds113841.mlab.com",
-  "mongoPort": "113841",
-  "mongoDatabase": "tempdb",
-  "mongoUser": "Admin",
-  "mongoPassword": "Thunder1",
-}
