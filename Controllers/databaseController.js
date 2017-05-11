@@ -1,4 +1,17 @@
 const mongoose = require("mongoose");
+const nconf = require("nconf");
+
+// encrypt database url and connect
+nconf.argv().env().file('keys.json');
+const user = nconf.get('mongoUser');
+const pass = nconf.get('mongoPass');
+const host = nconf.get('mongoHost');
+const port = nconf.get('mongoPort');
+
+let uri = `mongodb://${user}:${pass}@${host}:${port}`;
+if (nconf.get('mongoDatabase')) {
+  uri = `${uri}/${nconf.get('mongoDatabase')}`;
+}
 
 // Set up Schema
 const Schema = mongoose.Schema;
@@ -12,22 +25,10 @@ const messageSchema = Schema({
 
 let Message = mongoose.model("Message", messageSchema);
 
-let thisMessage = new Message({
-                user:"Colibaba",
-                body:"Does this work?",
-                date:Date.now(),
-                seen:false
-});
-
-thisMessage.save(function(err, thisMessage){
-  if(err) return console.error(err);
-  console.log(thisMessage);
-});
-
 module.exports = {
-  start:function(uri) {
+  start:function(url = uri) {
   	// connect to mongo database
-    mongoose.connect(uri);
+    mongoose.connect(url);
 
     let db = mongoose.connection;
 
@@ -37,12 +38,14 @@ module.exports = {
   	}).on('error', console.error.bind(console, 'connection error:'.red));
 
   },
-  save:function(obj){
+  saveMsg:function(obj){
+    console.log("DATABASE SAYS".green.whiteBG, obj);
+    let now = Date.now();
     let temp = new Message({
       user:obj.user,
-      message:obj.message,
-      date:Date.now(),
-      seen:obj.seen
+      body:obj.message,
+      seen:obj.seen,
+      date:now
     });
     temp.save(function(err, temp){
       if(err) return console.error(err);

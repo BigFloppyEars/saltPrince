@@ -1,4 +1,4 @@
-//jshint esversion:6 
+//jshint esversion:6
 
 "use strict";
 
@@ -10,26 +10,30 @@ requirejs.config({
 	// Load all Modules.
 	requirejs(
 		[
-		
-		],	
+
+		],
 	// All Modules Loaded.
-	
-	
-// Start "root" or "main" module/ script.	
+
+
+// Start "root" or "main" module/ script.
 function(){
-	
-		console.log($("#user").html());
+
+	console.log($("#user").html());
 	if ($("#user").html() !== undefined) {
 		console.log($("#title").html());
 		$("#send").click(function() {
 			let temp = $("#message").val();
 			console.log($("#message").val());
 			$.ajax({
-				url: 'http://localhost:8080/messaging',
-				data: {"message": temp},
+				url: '/messaging',
+				data: {
+					"message": temp,
+					"user": $("#user").html()
+				},
 				type: 'POST',
 				success: function (data) {
 					location.reload();
+					$("#message").val(" ");
 					let ret = jQuery.parseJSON(data);
 					console.log('Success: ' + ret.message.toString());
 				},
@@ -40,5 +44,5 @@ function(){
 			});
 		});
 	}
-	
+
 });

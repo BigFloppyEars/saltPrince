@@ -1,0 +1,11 @@
+extends profile.pug
+
+block append content
+	.container-fluid
+		.row
+				ul#gamelist.col-md-4
+					li#laststand
+						a(href="/laststand") Last Stand
+
+block prepend foot
+	script(data-main="js/games.js" src="js/require.js")

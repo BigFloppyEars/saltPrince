@@ -4,9 +4,8 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const nconf = require("nconf");
 const serverController = require("./Controllers/serverController.js");
-const dbController = require("./Controllers/databaseController.js");
+//const dbController = require("./Controllers/databaseController.js");
 
 const passport = require("passport");
 
@@ -29,22 +28,9 @@ app.use(express.static("Assets"));
 // Set post parsing middleware
 app.use(bodyParser.urlencoded({extended: false}));
 
-// Handle database logic
-nconf.argv().env().file('keys.json');
-const user = nconf.get('mongoUser');
-const pass = nconf.get('mongoPass');
-const host = nconf.get('mongoHost');
-const port = nconf.get('mongoPort');
-
-let uri = `mongodb://${user}:${pass}@${host}:${port}`;
-if (nconf.get('mongoDatabase')) {
-  uri = `${uri}/${nconf.get('mongoDatabase')}`;
-}
-
-dbController.start(uri);
-
 // Handle routing and request logic
-serverController(app);
+serverController.getREQs(app);
+serverController.postREQs(app);
 
 // Listen for requests at port 3000
 app.listen(8080);

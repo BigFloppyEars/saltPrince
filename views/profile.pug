@@ -13,23 +13,22 @@ html(lang="en")
 				if user !== undefined
 					.row
 						ul.nav.nav-pills
-							li 
-								a(href="#") Home
-							li 
-								a(href="/laststand") Games
-							li 
+							li
+								a(href="/") Home
+							li
+								a(href="/games") Games
+							li
 								a(href="/messaging") Community
 							li
-								a(href="/login")= user
+								a#user(href="/login")= user
 				else
 					.row
 						ul.nav.nav-pills
-							li 
-								a(href="#") Home
-							li 
-								a(href="/laststand") Games
-							li 
+							li
+								a(href="/") Home
+							li
+								a(href="/games") Games
+							li
 								a(href="/login") Login
 		block foot
 			script(src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous")
-	
