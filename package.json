@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "author": "bigFloppyEars",
+  "author": "BigFloppyEars",
   "repository": {
     "type": "git",
     "url": "http://github.com/BigFloppyEars/saltPrince"
@@ -15,12 +15,14 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "colors": "^1.1.2",
+    "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
     "mongoose": "^4.9.7",
     "nconf": "^0.8.4",
     "passport": "^0.3.2",
+    "passport-google-oauth20": "^1.0.0",
     "pug": "^2.0.0-beta11"
   }
 }

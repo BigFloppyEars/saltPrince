@@ -7,6 +7,8 @@ block append content
 				button#login(type="submit") Guest Login
 			else
 				button#logout(type="submit") Logout
-			
+		.row
+			<a href="/login/google">Log In with Google</a>
+
 block prepend foot
 	script(data-main="js/login.js" src="js/require.js")

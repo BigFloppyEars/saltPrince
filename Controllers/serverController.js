@@ -1,4 +1,5 @@
 const fs = require("fs");
+const passport = require("passport");
 const dbController = require("./databaseController.js");
 
 const meta = {
@@ -28,12 +29,23 @@ module.exports = {
 			res.render("login", meta);
 		});
 
-		app.get("/logout", function(req, res){
-			res.render("logout", meta);
-		});
-
 		app.get("/:var(games)?", function(req, res){
 			res.render("games", meta);
+		});
+
+		app.get('/login/google', passport.authenticate('google', {
+			scope: 'https://www.googleapis.com/auth/plus.login'
+		})
+	);
+
+		app.get('/login/google/return', passport.authenticate('google', { failureRedirect: '/login' }),
+  		function(req, res) {
+    		res.redirect('/');
+  	});
+
+		app.get('/profile', require('connect-ensure-login').ensureLoggedIn(),
+  		function(req, res){
+    		res.render('profile', { user: req.user });
 		});
 	},
 	postREQs:function(app){
