@@ -20,34 +20,36 @@ const messageSchema = Schema({
   user: String,
   body: String,
   date: {type: Date, default: Date.now},
-  seen: Boolean
+  seen: Boolean,
+  sessid: String
 });
 
 let Message = mongoose.model("Message", messageSchema);
 
 module.exports = {
-  start:function(url = uri) {
+  start: (url = uri) => {
   	// connect to mongo database
     mongoose.connect(url);
 
     let db = mongoose.connection;
 
-  	db.once('open', function() {
+  	db.once('open', () => {
   		// we're connected!
   		console.log("Connected to message database.".blue.whiteBG);
   	}).on('error', console.error.bind(console, 'connection error:'.red));
 
   },
-  saveMsg:function(obj){
+  saveMsg: (obj) => {
     console.log("DATABASE SAYS".green.whiteBG, obj);
     let now = Date.now();
     let temp = new Message({
       user:obj.user,
       body:obj.message,
       seen:obj.seen,
-      date:now
+      date:now,
+      sessid:obj.sessid
     });
-    temp.save(function(err, temp){
+    temp.save((err, temp) => {
       if(err) return console.error(err);
       console.log(temp);
     });

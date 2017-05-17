@@ -1,0 +1,9 @@
+extends profile.pug
+
+block append content
+	.container-fluid
+		.row
+				
+
+block prepend foot
+	script(data-main="js/games.js" src="js/require.js")

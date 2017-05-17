@@ -10,60 +10,68 @@ const meta = {
 dbController.start();
 
 module.exports = {
-	getREQs:function(app){
+	getREQs: (app) => {
 
 		// Get Request Handlers
-		app.get("/laststand", function(req, res){
-			res.render("laststand", meta);
+		app.get("/laststand", (req, res) => {
+			res.render("laststand");
 		});
 
-		app.get("/messaging", function(req, res){
-			res.render("messaging", meta);
+		app.get("/messaging", (req, res) => {
+			console.log(res.locals.user);
+			res.locals.messages = meta.messages
+			res.render("messaging");
 		});
 
-		app.get("/myprofile", function(req, res){
-			res.render("profile", meta);
+		app.get("/login", (req, res) => {
+			res.render("login");
 		});
 
-		app.get("/login", function(req, res){
-			res.render("login", meta);
+		app.get("/games", (req, res) => {
+			res.render("games");
 		});
 
-		app.get("/:var(games)?", function(req, res){
-			res.render("games", meta);
-		});
+		app.get('/login/google', passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login'}
+		));
 
-		app.get('/login/google', passport.authenticate('google', {
-			scope: 'https://www.googleapis.com/auth/plus.login'
-		})
-	);
-
-		app.get('/login/google/return', passport.authenticate('google', { failureRedirect: '/login' }),
-  		function(req, res) {
-    		res.redirect('/');
+		app.get('/login/google/return', passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/profile' }),
+  		(req, res) => {
+    		res.redirect('/profile');
   	});
 
 		app.get('/profile', require('connect-ensure-login').ensureLoggedIn(),
-  		function(req, res){
-    		res.render('profile', { user: req.user });
+  		(req, res) => {
+				console.log(res.locals.user);
+				res.locals.user = req.user.displayName;
+    		res.render('login');
 		});
+
+		app.get("/", (req, res) =>{
+			res.render("games");
+		});
+
+		app.get("/:var*[a-z]*[A-Z]?", (req, res) => {
+			res.redirect("/");
+		});
+
 	},
-	postREQs:function(app){
+	postREQs: (app) => {
 		// Post Rquest Handlers
-		app.post("/laststand", function(req, res){
+		app.post("/laststand", (req, res) => {
 			res.send(JSON.stringify(req.body));
 		});
 
-		app.post("/messaging", function(req, res){
+		app.post("/messaging", (req, res) => {
 			res.send(JSON.stringify(req.body));
 			if (req.body.message.length > 1) {
 				meta.messages.all.push([req.body.user, ,": ", req.body.message].join(""));
-				console.log("SERVER SAYS".red.whiteBG, "new message from: ", req.body.user, ": ", req.body.message);
+				console.log("SERVER SAYS".red.whiteBG, "new message from: ", req.body.user, ": ", req.body.message, req.session.id);
 				dbController.saveMsg({
 					user: req.body.user,
 					message: req.body.message,
 					date: Date.now(),
-					seen: true
+					seen: true,
+					sessid: req.session.id
 				});
 			}
 			else {
@@ -71,15 +79,12 @@ module.exports = {
 			}
 		});
 
-		app.post("/login", function(req, res){
-			res.send(JSON.stringify(req.body));
-			console.log(req.body);
+		app.post("/login", (req, res) => {
 			if(req.body.loggedIn === "true") {
-				meta.user = "Guest";
+				res.redirect("/login");
 			}
 			else if(req.body.loggedIn === "false") {
-			console.log(req.body);
-				meta.user = undefined;
+				res.send(JSON.stringify(req.body));
 			}
 		});
 	}

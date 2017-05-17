@@ -3,11 +3,6 @@ extends profile.pug
 block append content
 	.container-fluid
 		.row
-			if user === undefined
-				button#login(type="submit") Guest Login
-			else
-				button#logout(type="submit") Logout
-		.row
 			<a href="/login/google">Log In with Google</a>
 
 block prepend foot
