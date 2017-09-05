@@ -18,6 +18,6 @@ requirejs.config({
 // Start "root" or "main" module/ script.
 function(){
 
-	console.log($);
+	
 
 });
